@@ -4,4 +4,7 @@ Software packages required for LaDD that need to be install on the system:
  * RPi.GPIO (latest from apt-get)
  * python3-numpy (latest from apt-get) or numpy (latest from pip3) (I do not believe it matters; it's your choice)
  * cv2 (OpenCV) (latest version from OpenCV online repository)
+ * Pillow (latest from pip3)
  * "tcl" and "tkinter" (latest from apt-get; I am sure that with the latest version of python3 from apt-get come the latest versions of these packages)
+ 
+For some of these packages that need to be installed/upgraded via pip3, you will have to first uninstall those that have been already installed via apt-get beforehand.
