@@ -1,0 +1,2 @@
+Things needed to be done for LaDD to be truly ready for open source development by the wonderful open source community (according to Kyle, author of LaDD):
+ * Finish cleaning up some single-line comments in the "interfaces" package, as well as demonstrating several downfalls and issues with current code.
