@@ -1,0 +1,7 @@
+Software packages required for LaDD that need to be install on the system:
+ * pyserial (latest from pip3)
+ * obd (latest from pip3; requires the latest version of pyserial to work correctly)
+ * RPi.GPIO (latest from apt-get)
+ * python3-numpy (latest from apt-get) or numpy (latest from pip3) (I do not believe it matters; it's your choice)
+ * cv2 (OpenCV) (latest version from OpenCV online repository)
+ * "tcl" and "tkinter" (latest from apt-get; I am sure that with the latest version of python3 from apt-get come the latest versions of these packages)
