@@ -417,7 +417,7 @@ class User_Interface:
         Displays the "About" statement in a generic information window.
         """
         
-        messagebox.showinfo(message='LaDD ("La"ne "D"etection "D"evice) - Version 2.0.', detail='Kyle Nied is responsible for the software, John "Trey" Forman for the hardware, Nathan Cordell for designing LaDD\'s box, Paige Orner for the project\'s documentation, and Stacey Sawicki for financially supporting the development of the project.')
+        messagebox.showinfo(message='LaDD ("La"ne "D"etection "D"evice)', detail='Version 1.0')
     
     def cp_help_window(self):
         """
