@@ -1,0 +1,21 @@
+To get the Pi camera to connect with the Video4Linux2 driver at boot-up, type the following in the Terminal in quotes to open up a specific configuration file:
+
+"
+sudo leafpad /etc/modules-load.d/modules.conf
+"
+(Do not include the quotes)
+
+After opening up this file, go to the end of the file, make two new lines, then add the following in quotes:
+
+"
+#picamera
+bcm2835-v4l2
+"
+(Do not include the quotes)
+
+Save the file, close it, make sure nothing else is open other than the Terminal, then restart the Raspberry Pi by typing the following in quotes into the Terminal:
+
+"
+sudo reboot
+"
+(Do not include the quotes)
