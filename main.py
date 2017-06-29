@@ -67,13 +67,13 @@ if __name__ == '__main__':
     if not config_vars[0]:
         shared_dict['turn_off_LaDD'] = True
     
-    if config_vars[0]:
-        OBD_connected = OBD.OBD.test_OBD_connection(shared_dict['baud_rate'])
-        camera_connected = camera.Camera.test_camera_connection()
-        OBD_connected = True
-        camera_connected = True
-        if not OBD_connected or not camera_connected:
-            shared_dict['turn_off_LaDD'] = True
+    OBD_connected = OBD.OBD.test_OBD_connection(shared_dict['baud_rate'])
+    camera_connected = camera.Camera.test_camera_connection()
+    #The two lines below are for testing purposes.
+    #OBD_connected = True
+    #camera_connected = True
+    if not OBD_connected or not camera_connected:
+        shared_dict['turn_off_LaDD'] = True
             
     #For the purpose of testing individual "interfaces," you can comment out each line of code pertaining to the creation of one of the "X_obj" objects, their passing through their respective "X_process" mp.Process, etc.
     

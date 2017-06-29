@@ -390,15 +390,14 @@ class User_Interface:
         """
         
         if self.need_to_set_config_vars:
-            messagebox.showinfo(message='Sorry, one of the configuration variables is non-existant or not acceptable.', detail='Go to the "Set Config. Vars." tab to find the variable that equals -1 and give it an acceptable value.')
-        elif not self.camera_connected:
+            messagebox.showinfo(message='Sorry, at least one of the configuration variables is non-existant or not acceptable.', detail='Go to the "Set Config. Vars." tab to find the variables that equal -1 and give them an acceptable value.')
+        if self.data_vars_defaulted:
+            messagebox.showinfo(message='Sorry, at least one of the data variables is non-existant or not acceptable.', detail='Any of the data variables that were problematic have been set to their default values. Make sure to reconfigure those variables in the "Camera" tab.')
+        if not self.camera_connected:
             messagebox.showinfo(message='Sorry, a camera connection could not be establish.', detail='Check the cabel between LaDD and the Raspberry Pi V2 Camera Module and make sure it is snuggly connected to both.')
-        elif not self.OBD_connnected:
+        if not self.OBD_connnected:
             messagebox.showinfo(message='Sorry, an OBD connection could not be establish.', detail='Check both your physical connection between your vehicle\'s OBD port and that of LaDD\'s serial port, as well as the current value of the "Baud Rate" configuration variable, which may not be suited to your vehicle.')
         
-        if self.data_vars_defaulted:
-            messagebox.showinfo(message='Sorry, one of the data variables is non-existant or not acceptable.', detail='Any of the data variables that were problematic have been set to their default values. Make sure to reconfigure those variables in the "Camera" tab.')
-            
         if not self.shared_dict['turn_off_LaDD']:
             #16 milliseconds represents 62.5 frames per second, about 60 frames per second
             self.root.after(16,self.update_feed_frame)
@@ -588,13 +587,13 @@ class User_Interface:
                     if item[0] == 0:
                         return_list[1]['binary_threshold_value_lower_end'] = 130
                     else:
-                        return_list[1]['first_row_for_warping'] = 45
+                        return_list[1]['first_row_for_warping'] = 47
                     return_list[0] = False
             else:
                 if item[0] == 0:
                         return_list[1]['binary_threshold_value_lower_end'] = 130
                 else:
-                    return_list[1]['first_row_for_warping'] = 45
+                    return_list[1]['first_row_for_warping'] = 47
                 return_list[0] = False
         
         return return_list
