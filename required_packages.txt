@@ -1,10 +1,8 @@
-Software packages required for LaDD that need to be install on the system:
- * pyserial (latest from pip3)
- * obd (latest from pip3; requires the latest version of pyserial to work correctly)
- * RPi.GPIO (latest from apt-get or pip3; I do not believe it matters which one)
- * python3-numpy (latest from apt-get) or numpy (latest from pip3) (Again, I do not believe it matters; it's your choice)
- * cv2 (OpenCV) (latest version from OpenCV online repository)
- * Pillow (latest from pip3)
- * "tcl" and "tkinter" (latest from apt-get; I am sure that with the latest version of python3 from apt-get come the latest versions of these packages; I would suggest not trying to upgrade/install these from pip3 (!), as anything strongly associated with the system's python3 such I believe as these packages are is too imbeded into the rest of the system to try to mess with to "link" per sea with pip3, so just use apt-get)
- 
-For some of these packages that need to be installed/upgraded via pip3, you will have to first uninstall those that have been already installed via apt-get beforehand.
+Additional software packages required for LaDD that need to be install on the system and where to find them:
+**Note: make sure that the latest version of every single one of these packages are installed. For some of these packages that need to be installed/upgraded via pip3 instead of apt-get, you will have to first uninstall their counterparts in the apt-get repositories beforehand via apt-get using "sudo" privileges.
+
+ * pyserial [pip3: pyserial]
+ * obd (install latest pyserial first) [pip3: obd]
+ * RPi.GPIO [apt-get: python3-rpi.gpio/pip3: RPi.GPIO] (I do not believe it matters which one)
+ * Pillow (first remove the apt-get package "python3-pil" if already installed, then install the pip3 version) [pip3: Pillow]
+ * "tcl" and "tkinter" [apt-get: should already be installed]
