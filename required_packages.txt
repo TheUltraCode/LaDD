@@ -5,4 +5,3 @@ Additional software packages required for LaDD that need to be install on the sy
  * obd (install latest pyserial first) [pip3: obd]
  * RPi.GPIO [apt-get: python3-rpi.gpio/pip3: RPi.GPIO] (I do not believe it matters which one)
  * Pillow (first remove the apt-get package "python3-pil" if already installed, then install the pip3 version) [pip3: Pillow]
- * "tcl" and "tkinter" [apt-get: should already be installed]
