@@ -1,7 +1,0 @@
-Additional software packages required for LaDD that need to be install on the system and where to find them:
-**Note: make sure that the latest version of every single one of these packages are installed. For some of these packages that need to be installed/upgraded via pip3 instead of apt-get, you will have to first uninstall their counterparts in the apt-get repositories beforehand via apt-get using "sudo" privileges.
-
- * pyserial [pip3: pyserial]
- * obd (install latest pyserial first) [pip3: obd]
- * RPi.GPIO [apt-get: python3-rpi.gpio/pip3: RPi.GPIO] (I do not believe it matters which one)
- * Pillow (first remove the apt-get package "python3-pil" if already installed, then install the pip3 version) [pip3: Pillow]
