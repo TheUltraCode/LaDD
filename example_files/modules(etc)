@@ -2,11 +2,8 @@
 #
 # This file contains the names of kernel modules that should be loaded
 # at boot time, one per line. Lines beginning with "#" are ignored.
-#
-#Path: /etc/modules/
+#Path: /etc/
 
 i2c-dev
-
-#picamera
 bcm2835-v4l2
 stmpe_ts
