@@ -578,7 +578,7 @@ class User_Interface:
         return_list = [True,{'vehicle_width':0,'baud_rate':0}]
         
         for var in config_vars:
-            if (var[1] != '') and (var[1] != '0') and (var[1] != '.'):
+            if (var[1] != '') and (float(var[1]) > 0) and (var[1] != '.'):
                 if var[0] == 'vehicle_width':
                     return_list[1][var[0]] = float(var[1])
                 else:
