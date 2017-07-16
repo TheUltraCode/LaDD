@@ -542,22 +542,49 @@ class User_Interface:
         Return Arguments:
          * return_list [list] -> The first element is a bool, which is the answer to the question "Do any of the 'configuration variables' equal '', '0', or '.'?", and its second element is another list whose values are that of the "configuration variables," whether those in "configure.csv" or those given.
         """
-        #returns False if at least one of the configuration variables are equal to "", "0", or ".", else it returns a dictionary containing the configuration variables' values
+        
         with open('configure.csv', 'r') as config:
             reader = csv.reader(config)
-            config_vars = [row[1] for row in reader]
-            #config_var = configuration variables
-
+            rows = [row for row in reader]
+        
+        config_vars = []
+        #config_var = configuration variables
+        found_config_var_rows = {'vehicle_width':False,'baud_rate':False}
+		
+        for row in rows:
+            if len(row) > 0:
+                if row[0] == 'vehicle_width':
+                    if not found_config_var_rows['vehicle_width']:
+                        found_config_var_rows['vehicle_width'] = True
+                        config_vars.append(row)
+                elif row[0] == 'baud_rate':
+                    if not found_config_var_rows['baud_rate']:
+                        found_config_var_rows['baud_rate'] = True
+                        config_vars.append(row)
+        
+        for variable in enumerate(config_vars,0):
+            if len(variable[1]) == 1:
+                config_vars[variable[0]] = [variable[1][0],'']
+        
+        if not found_config_var_rows['vehicle_width']:
+            config_vars.append(['vehicle_width',''])
+        if not found_config_var_rows['baud_rate']:
+            config_vars.append(['baud_rate',''])
+        
+        with open('configure.csv', 'w', newline='') as config:
+            writer = csv.writer(config)
+            writer.writerows(config_vars)
+        
         return_list = [True,{'vehicle_width':0,'baud_rate':0}]
-        fields = ['vehicle_width','baud_rate']
-        for item in enumerate(fields,0):
-            if (config_vars[item[0]] != '') and (config_vars[item[0]] != '0') and (config_vars[item[0]] != '.'):
-                if item[0] == 0:
-                    return_list[1]['vehicle_width'] = float(config_vars[item[0]])
+        
+        for var in config_vars:
+            if (var[1] != '') and (var[1] != '0') and (var[1] != '.'):
+                if var[0] == 'vehicle_width':
+                    return_list[1][var[0]] = float(var[1])
                 else:
-                    return_list[1]['baud_rate'] = int(config_vars[item[0]])
+                    return_list[1][var[0]] = int(var[1])
             else:
-                return_list[1][item[1]] = -1
+                return_list[1][var[0]] = -1
                 return_list[0] = False
         
         return return_list
@@ -573,25 +600,50 @@ class User_Interface:
         
         with open('data.csv', 'r') as data:
             reader = csv.reader(data)
-            data_vars= [row[1] for row in reader]
-            #data_vars = configuration variable
+            rows = [row for row in reader]
+        
+        data_vars = []
+        #data_var = data variables
+        found_data_var_rows = {'binary_threshold_value_lower_end':False,'first_row_for_warping':False}
+		
+        for row in rows:
+            if len(row) > 0:
+                if row[0] == 'binary_threshold_value_lower_end':
+                    if not found_data_var_rows['binary_threshold_value_lower_end']:
+                        found_data_var_rows['binary_threshold_value_lower_end'] = True
+                        data_vars.append(row)
+                elif row[0] == 'first_row_for_warping':
+                    if not found_data_var_rows['first_row_for_warping']:
+                        found_data_var_rows['first_row_for_warping'] = True
+                        data_vars.append(row)
+        
+        for variable in enumerate(data_vars,0):
+            if len(variable[1]) == 1:
+                data_vars[variable[0]] = [variable[1][0],'']
+        
+        if not found_data_var_rows['binary_threshold_value_lower_end']:
+            data_vars.append(['binary_threshold_value_lower_end',''])
+        if not found_data_var_rows['first_row_for_warping']:
+            data_vars.append(['first_row_for_warping',''])
+        
+        with open('data.csv', 'w', newline='') as data:
+            writer = csv.writer(data)
+            writer.writerows(data_vars)
         
         return_list = [True,{'binary_threshold_value_lower_end':0,'first_row_for_warping':0}]
-        fields = ['binary_threshold_value_lower_end','first_row_for_warping']
-        for item in enumerate(fields,0):
-            if (data_vars[item[0]] != '') and ('.' not in data_vars[item[0]]):
-                if (int(data_vars[item[0]]) >= 0):
-                    if (item[0] == 0 and (int(data_vars[item[0]]) <= 255)) or (item[0] == 1 and (int(data_vars[item[0]]) <= 59)):
-                        return_list[1][item[1]] = int(data_vars[item[0]])
+        
+        for var in data_vars:
+            if (var[1] != '') and ('.' not in var[1]):
+                if (int(var[1]) >= 0) and ((var[0] == 'binary_threshold_value_lower_end' and int(var[1]) <= 255) or (var[0] == 'first_row_for_warping' and int(var[1]) <= 59)):
+                    return_list[1][var[0]] = int(var[1])
                 else:
-                    if item[0] == 0:
+                    if var[0] == 'binary_threshold_value_lower_end':
                         return_list[1]['binary_threshold_value_lower_end'] = 130
                     else:
                         return_list[1]['first_row_for_warping'] = 47
-                    return_list[0] = False
             else:
-                if item[0] == 0:
-                        return_list[1]['binary_threshold_value_lower_end'] = 130
+                if var[0] == 'binary_threshold_value_lower_end':
+                    return_list[1]['binary_threshold_value_lower_end'] = 130
                 else:
                     return_list[1]['first_row_for_warping'] = 47
                 return_list[0] = False
