@@ -535,9 +535,11 @@ class User_Interface:
             self.root.after(16,self.update_warning)
             
     @staticmethod
-    def get_X_vars_helper(name_of_csv_file, X_vars, X_var1, X_var2):
+    def get_X_vars_helper(name_of_csv_file, X_var1, X_var2):
         """
         """
+        
+        X_vars = []
         
         with open(name_of_csv_file, 'r') as csv_file:
             reader = csv.reader(csv_file)
@@ -579,11 +581,9 @@ class User_Interface:
         Return Arguments:
          * return_list [list] -> The first element is a bool, which is the answer to the question "Do any of the 'configuration variables' equal '', '0', or '.'?", and its second element is another list whose values are that of the "configuration variables," whether those in "configure.csv" or those given.
         """
-                
-        config_vars = []
-        #config_var = configuration variables
         
-        config_vars = User_Interface.get_X_vars_helper('configure.csv',config_vars,'vehicle_width','baud_rate')
+        config_vars = User_Interface.get_X_vars_helper('configure.csv','vehicle_width','baud_rate')
+        #config_var = configuration variables
         
         return_list = [True,{'vehicle_width':0,'baud_rate':0}]
         
@@ -608,10 +608,8 @@ class User_Interface:
          * return_list [list] -> The first element is a bool, which is the answer to the question "Do any of the 'data variables' equal '' or '.'?", and its second element is another list whose values are that of the "data variables," whether those in "data.csv" or those given.
         """
         
-        data_vars = []
+        data_vars = User_Interface.get_X_vars_helper('data.csv','binary_threshold_value_lower_end','first_row_for_warping')
         #data_var = data variables
-        
-        data_vars = User_Interface.get_X_vars_helper('data.csv',data_vars,'binary_threshold_value_lower_end','first_row_for_warping')
         
         return_list = [True,{'binary_threshold_value_lower_end':0,'first_row_for_warping':0}]
         
