@@ -533,6 +533,43 @@ class User_Interface:
         
         if not self.shared_dict['turn_off_LaDD']:
             self.root.after(16,self.update_warning)
+            
+    @staticmethod
+    def get_X_vars_helper(name_of_csv_file, X_vars, X_var1, X_var2):
+        """
+        """
+        
+        with open(name_of_csv_file, 'r') as csv_file:
+            reader = csv.reader(csv_file)
+            rows = [row for row in reader]
+        
+        found_X_vars = {X_var1:False,X_var2:False}
+		
+        for row in rows:
+            if len(row) > 0:
+                if row[0] == X_var1:
+                    if not found_X_vars[ X_var1]:
+                        found_X_vars[ X_var1] = True
+                        X_vars.append(row)
+                elif row[0] == X_var2:
+                    if not found_X_vars[ X_var2]:
+                        found_X_vars[ X_var2] = True
+                        X_vars.append(row)
+        
+        for variable in enumerate(X_vars,0):
+            if len(variable[1]) == 1:
+                X_vars[variable[0]] = [variable[1][0],'']
+        
+        if not found_X_vars[X_var1]:
+            config_vars.append([X_var1,''])
+        if not found_X_vars[ X_var2]:
+            config_vars.append([ X_var2,''])
+        
+        with open(name_of_csv_file, 'w', newline='') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerows(X_vars)
+        
+        return X_vars
     
     @staticmethod
     def get_config_vars():
@@ -542,38 +579,11 @@ class User_Interface:
         Return Arguments:
          * return_list [list] -> The first element is a bool, which is the answer to the question "Do any of the 'configuration variables' equal '', '0', or '.'?", and its second element is another list whose values are that of the "configuration variables," whether those in "configure.csv" or those given.
         """
-        
-        with open('configure.csv', 'r') as config:
-            reader = csv.reader(config)
-            rows = [row for row in reader]
-        
+                
         config_vars = []
         #config_var = configuration variables
-        found_config_var_rows = {'vehicle_width':False,'baud_rate':False}
-		
-        for row in rows:
-            if len(row) > 0:
-                if row[0] == 'vehicle_width':
-                    if not found_config_var_rows['vehicle_width']:
-                        found_config_var_rows['vehicle_width'] = True
-                        config_vars.append(row)
-                elif row[0] == 'baud_rate':
-                    if not found_config_var_rows['baud_rate']:
-                        found_config_var_rows['baud_rate'] = True
-                        config_vars.append(row)
         
-        for variable in enumerate(config_vars,0):
-            if len(variable[1]) == 1:
-                config_vars[variable[0]] = [variable[1][0],'']
-        
-        if not found_config_var_rows['vehicle_width']:
-            config_vars.append(['vehicle_width',''])
-        if not found_config_var_rows['baud_rate']:
-            config_vars.append(['baud_rate',''])
-        
-        with open('configure.csv', 'w', newline='') as config:
-            writer = csv.writer(config)
-            writer.writerows(config_vars)
+        config_vars = User_Interface.get_X_vars_helper('configure.csv',config_vars,'vehicle_width','baud_rate')
         
         return_list = [True,{'vehicle_width':0,'baud_rate':0}]
         
@@ -598,37 +608,10 @@ class User_Interface:
          * return_list [list] -> The first element is a bool, which is the answer to the question "Do any of the 'data variables' equal '' or '.'?", and its second element is another list whose values are that of the "data variables," whether those in "data.csv" or those given.
         """
         
-        with open('data.csv', 'r') as data:
-            reader = csv.reader(data)
-            rows = [row for row in reader]
-        
         data_vars = []
         #data_var = data variables
-        found_data_var_rows = {'binary_threshold_value_lower_end':False,'first_row_for_warping':False}
-		
-        for row in rows:
-            if len(row) > 0:
-                if row[0] == 'binary_threshold_value_lower_end':
-                    if not found_data_var_rows['binary_threshold_value_lower_end']:
-                        found_data_var_rows['binary_threshold_value_lower_end'] = True
-                        data_vars.append(row)
-                elif row[0] == 'first_row_for_warping':
-                    if not found_data_var_rows['first_row_for_warping']:
-                        found_data_var_rows['first_row_for_warping'] = True
-                        data_vars.append(row)
         
-        for variable in enumerate(data_vars,0):
-            if len(variable[1]) == 1:
-                data_vars[variable[0]] = [variable[1][0],'']
-        
-        if not found_data_var_rows['binary_threshold_value_lower_end']:
-            data_vars.append(['binary_threshold_value_lower_end',''])
-        if not found_data_var_rows['first_row_for_warping']:
-            data_vars.append(['first_row_for_warping',''])
-        
-        with open('data.csv', 'w', newline='') as data:
-            writer = csv.writer(data)
-            writer.writerows(data_vars)
+        data_vars = User_Interface.get_X_vars_helper('data.csv',data_vars,'binary_threshold_value_lower_end','first_row_for_warping')
         
         return_list = [True,{'binary_threshold_value_lower_end':0,'first_row_for_warping':0}]
         
