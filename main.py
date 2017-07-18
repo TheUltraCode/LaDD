@@ -20,6 +20,7 @@ along with LaDD.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import multiprocessing as mp
+import os.path
 from interfaces import *
 
 """
@@ -52,18 +53,29 @@ def begin_process(obj):
     obj.begin()
 
 if __name__ == '__main__':
+    if not os.path.isfile('configure.csv'):
+        with open('configure.csv','x',newline='') as csvfile:
+            pass
+            
+    if not os.path.isfile('data.csv'):
+        with open('data.csv','x',newline='') as csvfile:
+            pass
+
     manager_obj = mp.Manager()
     shared_dict = manager_obj.dict({'vehicle_width':0,'baud_rate':0,'first_row_for_warping':0,'binary_threshold_value_lower_end':0,'turn_off_LaDD':False, 'below_48kph':False, 'crossed_48kph_threshold':False,'result':'',
     'crossed_lane':False,'crossed_divider':False,'nothing_detected':False,'full_frame':[],'ROI_frame':[],'warped_ROI_frame':[],'show_both_rows_for_warping':False,'processed_ROI_frame':[],'result':''})
-    
-    data_vars = user_interface.User_Interface.get_data_vars()
-    shared_dict['binary_threshold_value_lower_end'] = data_vars[1]['binary_threshold_value_lower_end']
-    shared_dict['first_row_for_warping'] = data_vars[1]['first_row_for_warping']
     
     config_vars = user_interface.User_Interface.get_config_vars()
     shared_dict['vehicle_width'] = config_vars[1]['vehicle_width']
     shared_dict['baud_rate'] = config_vars[1]['baud_rate']
     
+    data_vars = user_interface.User_Interface.get_data_vars()
+    shared_dict['binary_threshold_value_lower_end'] = data_vars[1]['binary_threshold_value_lower_end']
+    shared_dict['first_row_for_warping'] = data_vars[1]['first_row_for_warping']
+    
+    print(data_vars)
+    print(config_vars)
+    '''
     if not config_vars[0]:
         shared_dict['turn_off_LaDD'] = True
     
@@ -95,5 +107,5 @@ if __name__ == '__main__':
     user_interface_process.join()
     camera_process.join()
     audio_process.join()
-    OBD_process.join()
+    OBD_process.join()'''
     

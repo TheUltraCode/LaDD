@@ -563,9 +563,9 @@ class User_Interface:
                 X_vars[variable[0]] = [variable[1][0],'']
         
         if not found_X_vars[X_var1]:
-            config_vars.append([X_var1,''])
+            X_vars.append([X_var1,''])
         if not found_X_vars[ X_var2]:
-            config_vars.append([ X_var2,''])
+            X_vars.append([ X_var2,''])
         
         with open(name_of_csv_file, 'w', newline='') as csv_file:
             writer = csv.writer(csv_file)
