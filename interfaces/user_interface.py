@@ -583,7 +583,7 @@ class User_Interface:
         """
         
         config_vars = User_Interface.get_X_vars_helper('configure.csv','vehicle_width','baud_rate')
-        #config_var = configuration variables
+        #config_vars = configuration variables
         
         return_list = [True,{'vehicle_width':0,'baud_rate':0}]
         
@@ -609,7 +609,7 @@ class User_Interface:
         """
         
         data_vars = User_Interface.get_X_vars_helper('data.csv','binary_threshold_value_lower_end','first_row_for_warping')
-        #data_var = data variables
+        #data_vars = data variables
         
         return_list = [True,{'binary_threshold_value_lower_end':0,'first_row_for_warping':0}]
         
