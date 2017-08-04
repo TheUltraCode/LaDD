@@ -75,7 +75,7 @@ if __name__ == '__main__':
     
     print(data_vars)
     print(config_vars)
-    '''
+    
     if not config_vars[0]:
         shared_dict['turn_off_LaDD'] = True
     
@@ -107,5 +107,5 @@ if __name__ == '__main__':
     user_interface_process.join()
     camera_process.join()
     audio_process.join()
-    OBD_process.join()'''
+    OBD_process.join()
     
