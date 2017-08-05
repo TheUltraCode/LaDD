@@ -130,7 +130,7 @@ class User_Interface:
     """
     Instance Variables:
      * shared_dict [multiprocessing.Manager.dict()] -> A special dictionary returned by the Manager object "manager_obj" located in LaDD's main.py, this is a dictionary shared across the different processes that constitute LaDD.
-     * need_to_set_config_vars [bool] -> Determined in main.py, if False, then all of the configuration variables have been successfully pulled from the configure.csv file, but if True, then that was not the case.
+     * need_to_set_config_vars [bool] -> Determined in main.py, if False, then all of the configuration variables have been successfully pulled from the "configure.csv file", but if True, then that was not the case.
      * OBD_connected [bool] -> The result of running "interfaces.OBD.OBD.test_OBD_connection" in LaDD's main.py.
      * camera_connected [bool] -> The result of running "interfaces.camera.Camera.test_camera_connection" in LaDD's main.py.
      * root [tkinter.Tk] -> The "root" window of the entire user interface of LaDD.
@@ -138,7 +138,7 @@ class User_Interface:
      * notebook [tkinter.ttk.Notebook] -> The "Notebook" that is the only slave to "main_frame".
      * main_page [tkinter.ttk.Frame] -> The "Main" tab in the "Notebook" of LaDD's user interface, it is where help in using LaDD, an "About" statement, and the shutdown option for LaDD can be found. It is slave to "notebook."
      * camera_page [tkinter.ttk.Frame] -> The "Camera" tab in the "Notebook" of LaDD's user interface, it is where raw, partially processed, or completely processed footage from LaDD's camera can be seen. It is slave to "notebook."
-     * set_config_vars_page [tkinter.ttk.Frame] -> The "Set Config. Vars." tab in the "Notebook" of LaDD's user interface, it is where the configuration variables from LaDD's configure.csv file can be seen and edited. It is slave to "notebook".
+     * set_config_vars_page [tkinter.ttk.Frame] -> The "Set Config. Vars." tab in the "Notebook" of LaDD's user interface, it is where the configuration variables from LaDD's "configure.csv" file can be seen and edited. It is slave to "notebook".
      
      {"mp" = "main_page"; "cp" = "camera_page"; "scvp" = "set_config_vars_page"; "verti" = "vertical"; "horiz" = "horizontal"}
      
@@ -200,8 +200,9 @@ class User_Interface:
      * update_first_row_for_warping -> Updates the value of "shared_dict's" "first_row_for_warping" by setting it to "cp_warping_spinbox_value" when it is editted.
      * update_feed_frame -> Updates what is being displayed in the "cp_feed_label" with the latest images from "shared_dict's" "full_frame", "ROI_frame", or "processed_ROI_frame," depending on what was selected in the "cp_frame_combobox," after they were converted into usable tkinter images and stored in "ImageTk_obj."
      * update_warning -> Checks to see if there is something for LaDD to warn the user about, and if there is it changes "warning_label" and "warning_frame" accordingly.
-     * get_config_vars [static] -> "Reads" the configuration variables' data from the configure.csv file, checks to see if all of the configuration variables are acceptable and accounted for, and then returns its findings.
-     * get_data_vars [static] -> "Reads" the data variables' data from the data.csv" file, checks to see if all of the data variables are acceptable and accounted for, and then returns its findings.
+     * get_X_vars_helper [static] -> "Reads" the .csv files of LaDD ("configure.csv" or "data.csv"), searches for their respective "variables", makes up for incomplete or missing variables, updates the .csv files (possibly fixing and shortening them), then returns its findings; used by "get_config_vars" and "get_data_vars".
+     * get_config_vars [static] -> Passes "configure.csv" and the configuration variables' names to "get_X_vars_helper" to get the variables and their values, checks to see if all of the configuration variables are acceptable and accounted for, and then returns its findings.
+     * get_data_vars [static] -> Passes "data.csv" and the data variables' names to "get_X_vars_helper" to get the variables and their values, checks to see if all of the data variables are acceptable and accounted for, and then returns its findings.
      * set_config_vars -> Checks to see if the value of "new_config_var_value" is "acceptable," sets the configuration variable selected in "config_var_name" to "new_config_var_name" if the latter was acceptable, then finally tells the user of the success of setting a new value to a given configuration variable, or instead what was wrong with their value they entered into "scvp_entery."
      * set_data_vars -> Sets the data variables' values equal to that of "cp_threshold_spinbox_value" and "cp_warping_spinbox_value."
     """
@@ -212,7 +213,7 @@ class User_Interface:
         
         Arguments:
          * shared_dict [multiprocessing.Manager.dict()] -> A special dictionary returned by the Manager object "manager_obj" located in LaDD's main.py, this is a dictionary shared across the different processes that constitute LaDD.
-         * need_to_set_config_vars [bool] -> Determined in main.py, if False, then all of the configuration variables have been successfully pulled from the configure.csv file, but if True, then that was not the case.
+         * need_to_set_config_vars [bool] -> Determined in main.py, if False, then all of the configuration variables have been successfully pulled from the "configure.csv file", but if True, then that was not the case.
          * OBD_connected [bool] -> The result of running "interfaces.OBD.OBD.test_OBD_connection" in LaDD's main.py.
          * camera_connected [bool] -> The result of running "interfaces.camera.Camera.test_camerea_connection: in LaDD's main.py.
         """
@@ -537,6 +538,10 @@ class User_Interface:
     @staticmethod
     def get_X_vars_helper(name_of_csv_file, X_var1, X_var2):
         """
+        "Reads" the .csv files of LaDD ("configure.csv" or "data.csv"), searches for their respective "variables", makes up for incomplete or missing variables, updates the .csv files (possibly fixing and shortening them), then returns its findings; used by "get_config_vars" and "get_data_vars".
+        
+        Return arguments:
+         * X_vars [list] -> A list of two lists whose first elements are a variable "located" in the .csv file being looked at, and whose second element are the value of that variable.
         """
         
         X_vars = []
@@ -576,7 +581,7 @@ class User_Interface:
     @staticmethod
     def get_config_vars():
         """
-        "Reads" the configuration variables' data from the "configure.csv" file, checks to see if all of the configuration variables are acceptable and accounted for, and then returns its findings.
+        Passes "configure.csv" and the configuration variables' names to "get_X_vars_helper" to get the variables and their values, checks to see if all of the configuration variables are acceptable and accounted for, and then returns its findings.
          
         Return Arguments:
          * return_list [list] -> The first element is a bool, which is the answer to the question "Do any of the 'configuration variables' equal '', '0', or '.'?", and its second element is another list whose values are that of the "configuration variables," whether those in "configure.csv" or those given.
@@ -602,7 +607,7 @@ class User_Interface:
     @staticmethod
     def get_data_vars():
         """
-        "Reads" the data variables' data from the data.csv" file, checks to see if all of the data variables are acceptable and accounted for, and then returns its findings.
+        Passes "data.csv" and the data variables' names to "get_X_vars_helper" to get the variables and their values, checks to see if all of the data variables are acceptable and accounted for, and then returns its findings.
          
         Return Arguments:
          * return_list [list] -> The first element is a bool, which is the answer to the question "Do any of the 'data variables' equal '' or '.'?", and its second element is another list whose values are that of the "data variables," whether those in "data.csv" or those given.
