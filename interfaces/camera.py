@@ -293,7 +293,7 @@ class Camera:
                 #Find the region of interest (ROI).
                 self.shared_dict['full_frame'] = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
                 #cv2.imshow("Full Frame", frame)
-                self.ROI = frame[self.row_slice[0]:self.row_slice[1],self.col_slice[0]:self.col_slice[1]]
+                self.ROI = frame[int(self.row_slice[0]):int(self.row_slice[1]),int(self.col_slice[0]):int(self.col_slice[1])]
                 if self.shared_dict['show_both_rows_for_warping']:
                     self.AlteredROI = self.ROI.copy()
                     cv2.line(self.AlteredROI,(0,self.shared_dict['first_row_for_warping']),(320,self.shared_dict['first_row_for_warping']),(0,0,255),2)
