@@ -1,5 +1,5 @@
 """
-Copyright 2017 Kyle Nied (nied.kyle@gmail.com)
+Copyright 2017-2018 Kyle Nied (nied.kyle@gmail.com)
 
 <------------------------------------------------------------------>
 
@@ -72,9 +72,6 @@ if __name__ == '__main__':
     data_vars = user_interface.User_Interface.get_data_vars()
     shared_dict['binary_threshold_value_lower_end'] = data_vars[1]['binary_threshold_value_lower_end']
     shared_dict['first_row_for_warping'] = data_vars[1]['first_row_for_warping']
-    
-    print(data_vars)
-    print(config_vars)
     
     if not config_vars[0]:
         shared_dict['turn_off_LaDD'] = True

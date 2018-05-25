@@ -1,5 +1,5 @@
 """
-Copyright 2017 Kyle Nied (nied.kyle@gmail.com)
+Copyright 2017-2018 Kyle Nied (nied.kyle@gmail.com)
 
 <------------------------------------------------------------------>
 
@@ -324,7 +324,7 @@ class Camera:
                 self.lines = cv2.HoughLinesP(self.CannyROI,1.0,np.pi/180,30,minLineLength=30,maxLineGap=20)
                 self.HoughROI = cv2.cvtColor(self.CannyROI,cv2.COLOR_GRAY2BGR)
                 
-                if self.lines != None:
+                if self.lines is not None:
                     if len(self.lines) <= 8:
                         for coor in self.lines:
                             for x1,y1,x2,y2 in coor:
@@ -381,7 +381,7 @@ class Camera:
                     
                     if self.frames_taken >= 30 and len(self.avrg_vehicle_width_x_coors)==2 and not self.shared_dict['below_48kph']:
                         if self.state != 'over_divider':
-                            if self.avrg_divider_x4 != None:
+                            if self.avrg_divider_x4 is not None:
                                 if self.avrg_vehicle_width_x_coors[0] >= self.avrg_divider_x4:
                                     self.state = 'undetermined'
                                 else:
@@ -389,7 +389,7 @@ class Camera:
                             else:
                                 self.state = 'undetermined'
                         else:
-                            if self.avrg_divider_x4 != None:
+                            if self.avrg_divider_x4 is not None:
                                 if self.avrg_vehicle_width_x_coors[0] < self.avrg_divider_x4:
                                     self.state = 'over_divider'
                                 else:
@@ -398,15 +398,15 @@ class Camera:
                                 self.state = 'over_divider'
                         
                         if self.state == 'undetermined':
-                            if self.avrg_lane_x1 != None and self.avrg_lane_x2 != None:
+                            if self.avrg_lane_x1 is not None and self.avrg_lane_x2 is not None:
                                 if ((self.avrg_vehicle_width_x_coors[0] > self.avrg_lane_x1) and (self.avrg_vehicle_width_x_coors[1] > self.avrg_lane_x2)) or ((self.avrg_vehicle_width_x_coors[0] < self.avrg_lane_x1) and (self.avrg_vehicle_width_x_coors[1] < self.avrg_lane_x2)):
                                     self.state = 'out_lane'
                                 else:
                                     self.state = 'in_lane'
-                            elif self.avrg_lane_x1 != None and self.avrg_lane_x2 == None:
+                            elif self.avrg_lane_x1 is not None and self.avrg_lane_x2 is None:
                                 if ((self.avrg_vehicle_width_x_coors[0] < self.avrg_lane_x1) and (self.avrg_vehicle_width_x_coors[1] > self.avrg_lane_x1)):
                                     self.state = 'out_lane'
-                            elif self.avrg_lane_x1 == None and self.avrg_lane_x2 == None:
+                            elif self.avrg_lane_x1 is None and self.avrg_lane_x2 is None:
                                 self.state = 'no_lane'
                         
                         if self.state == self.previous_state:
@@ -427,13 +427,13 @@ class Camera:
                                 self.shared_dict['crossed_lane'] = False
                                 self.shared_dict['nothing_detected'] = True
                         
-                        if self.avrg_divider_x1 != None:
+                        if self.avrg_divider_x1 is not None:
                             for l in [self.avrg_divider_x1, self.avrg_divider_x2, self.avrg_divider_x3, self.avrg_divider_x4]:
                                 cv2.line(self.HoughROI,(int(l),0),(int(l),60),(0,165,255),2)
                                 
-                        if self.avrg_lane_x1 != None:
+                        if self.avrg_lane_x1 is not None:
                             cv2.line(self.HoughROI,(int(self.avrg_lane_x1),0),(int(self.avrg_lane_x1),60),(255,0,0),2)
-                        if self.avrg_lane_x2 != None:
+                        if self.avrg_lane_x2 is not None:
                             cv2.line(self.HoughROI,(int(self.avrg_lane_x2),0),(int(self.avrg_lane_x2),60),(255,0,0),2)
     
                         if len(self.avrg_vehicle_width_x_coors) == 2:
@@ -454,7 +454,7 @@ class Camera:
                     self.shared_dict['crossed_lane'] = False
                     self.shared_dict['nothing_detected'] = True
                                 
-                if self.previous_state == None or self.state != self.previous_state:
+                if self.previous_state is None or self.state != self.previous_state:
                     self.previous_state = self.state
                     
                 self.avrg_x_coor_of_lines=[]

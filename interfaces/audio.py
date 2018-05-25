@@ -1,5 +1,5 @@
 """
-Copyright 2017 Kyle Nied (nied.kyle@gmail.com)
+Copyright 2017-2018 Kyle Nied (nied.kyle@gmail.com)
 
 <------------------------------------------------------------------>
 
